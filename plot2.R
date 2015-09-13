@@ -10,13 +10,20 @@ pdata[,1]  <- as.Date(pdata[,1], "%d/%m/%Y")
 #selecting the dates we're interested in
 pdata  <- pdata [which (pdata$Date== "2007-02-01" | pdata$Date== "2007-02-02") ,]
 
-# changing pdata$Time into time format
-# changing pdata$Time into time format
-pdata["datetime"] <- NA
-pdata$datetime <- paste(pdata$Date , pdata$Time, sep=" ")
-pdata$datetime  <- as.POSIXct(strptime(pdata$datetime , format = "%Y-%d-%m %H:%M:%S"),"%Y-%d-%m %H:%M:%S", tz ="CET")
+# changing  pdata$Date into Date format
+pdata[,1]  <- as.Date(pdata[,1], "%d/%m/%Y")
 
-par(mfrow = c(1,1))
+#selecting the dates we're interested in
+pdata  <- pdata [which (pdata$Date== "2007-02-01" | pdata$Date== "2007-02-02") ,]
+
+
+# I create a new datetime column to store Date and Time values
+pdata["datetime"] <- NA
+# concatenating Date and Time
+pdata$datetime <- paste(pdata$Date , pdata$Time, sep=" ") 
+# updating the new datetime column as POSIXct format 
+pdata$datetime  <- as.POSIXct(strptime(pdata$datetime , format = "%Y-%m-%d %H:%M:%S"),"%Y-%m-%d %H:%M:%S", tz ="CET")
+
 
 # creating the plot
 png("plot2.png", width = 480, height = 480)
